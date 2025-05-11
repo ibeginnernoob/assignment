@@ -7,6 +7,17 @@ import { Text, View } from 'react-native';
 
 export default function HomeScreen() {
     const [word, setWord] = useState<string>('');
+	const [loading, setLoading] = useState(false)
+	const [data, setData] = useState({
+		word: ""
+	})
+
+	const search = async () => {
+		setLoading(true)
+		//send request
+		// set data
+		setLoading(false)
+	}
 
     return (
         <LinearGradient colors={['white', '#a78bfa']} className="h-screen">
