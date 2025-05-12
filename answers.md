@@ -16,7 +16,7 @@ Catch anti-patterns (e.g., missing key props in lists) in real-time.
 Impact: Reduces repetitive coding by 30–50%, letting engineers focus on complex logic.
 
 2. AI-Assisted UI/UX Design
-Example: Tools like Figma’s AI or Uizard can:
+Example: Tools like Figma’s AI or Lovable or v0 by vercel or Uizard can:
 
 Generate design prototypes from text prompts (e.g., “Dashboard with metrics card, sidebar, and dark theme”).
 
