@@ -1,10 +1,16 @@
 import { Text, View } from 'react-native';
 
-const SYNONYMS = ['light synthesis', 'carbon fixation', 'biosynthesis'];
-const definition = 'The process by which green plants and some other organisms use sunlight to synthesize foods with carbon dioxide and water.'
-const description = 'The conversion of light energy into chemical energy by living organisms.'
-
-export default function ResultCard() {
+export default function ResultCard({ searchData } : {
+	searchData: {
+		status: string
+		title: string
+		phoneticTranscription: string
+		partOfSpeech: string
+		definition: string
+		description: string
+		synonyms: string[]
+	}
+}) {
     return (
         <View
             style={{
@@ -19,27 +25,27 @@ export default function ResultCard() {
             }}
             className="flex flex-col gap-1 mx-10 px-5 py-3 rounded-lg bg-white"
         >
-            <Text className="text-2xl font-semibold text-purple-700">
-                Photosynthesis
+            <Text className="capitalize text-2xl font-semibold text-purple-700">
+                {searchData.title}
             </Text>
-            <Text className="text-base">/ˌfoʊtoʊˈsɪnθəsɪs/</Text>
+            <Text className="text-base">{searchData.phoneticTranscription}</Text>
             <View className="flex-row mt-2">
                 <Text className="text-sm font-semibold px-3 py-1 rounded-lg text-white bg-purple-600">
-                    noun
+                    {searchData.partOfSpeech.toLowerCase()}
                 </Text>
             </View>
             <View className="my-3 flex flex-col gap-3">
                 <Text className="italic">
-                    "{definition}"
+                    "{searchData.definition}"
                 </Text>
                 <Text className="">
-                    {description}
+                    {searchData.description}
                 </Text>
             </View>
             <View className='flex flex-col gap-2'>
                 <Text className='text-base font-light'>Synonyms:</Text>
                 <View className='flex flex-row flex-wrap gap-3'>
-                    {SYNONYMS.map((synonym: string) => {
+                    {searchData.synonyms.map((synonym: string) => {
                         return (
                             <View key={synonym} className='mb-1 px-2 py-1 bg-purple-100 rounded-xl'>
                                 <Text className='text-sm font-semibold text-purple-600'>{synonym}</Text>

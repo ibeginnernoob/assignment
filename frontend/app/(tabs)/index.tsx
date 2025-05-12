@@ -1,23 +1,85 @@
+import axios from 'axios';
 import ResultCard from '@/components/app/resultDisplay/resultCard';
 import Searchbar from '@/components/app/searchSection/seachbar';
 import SearchButton from '@/components/app/searchSection/searchButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
+import Loader from '@/components/app/loader';
+
+const DEV_URL = 'http://192.168.1.245:3000';
+
+interface SearchDataFormat {
+    status: string;
+    title: string;
+    phoneticTranscription: string;
+    partOfSpeech: string;
+    definition: string;
+    description: string;
+    synonyms: string[];
+}
+
+interface Data {
+    type: 'Data';
+    searchData: SearchDataFormat;
+}
+
+interface Error {
+    type: 'Error';
+    msg: string;
+}
+
+type responseData = Error | Data;
 
 export default function HomeScreen() {
     const [word, setWord] = useState<string>('');
-	const [loading, setLoading] = useState(false)
-	const [data, setData] = useState({
-		word: ""
-	})
 
-	const search = async () => {
-		setLoading(true)
-		//send request
-		// set data
-		setLoading(false)
-	}
+    const [error, setError] = useState({
+        isError: false,
+        msg: '',
+    });
+    const [loading, setLoading] = useState(false);
+    const [searchData, setSearchData] = useState<SearchDataFormat>({
+        status: '',
+        title: '',
+        phoneticTranscription: '',
+        partOfSpeech: '',
+        definition: '',
+        description: '',
+        synonyms: [],
+    });
+
+    const search = async () => {
+        try {
+            setLoading(true);
+            const { status, data } = await axios.get<responseData>(
+                `${DEV_URL}/search/${word.trim()}`
+            );
+            if (data.type === 'Error') {
+                throw new Error(data.msg);
+            } else {
+                setSearchData((_) => {
+                    return {
+                        ...data.searchData,
+                    };
+                });
+            }
+        } catch (e: any) {
+            console.log(e.message);
+            setError((_) => {
+                return {
+                    isError: true,
+                    msg: e.message as string,
+                };
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return <Loader />;
+    }
 
     return (
         <LinearGradient colors={['white', '#a78bfa']} className="h-screen">
@@ -35,9 +97,11 @@ export default function HomeScreen() {
                         <View className="flex-1">
                             <Searchbar word={word} setWord={setWord} />
                         </View>
-                        <SearchButton />
+                        <SearchButton search={search} />
                     </View>
-                    <ResultCard />
+                    {searchData.title.length !== 0 && !error.isError && (
+                        <ResultCard searchData={searchData} />
+                    )}
                 </View>
             </View>
         </LinearGradient>

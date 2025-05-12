@@ -16,8 +16,7 @@ module.exports = function (api) {
                         'tailwind.config': './tailwind.config.js',
                     },
                 },
-            ],
-            ['module:react-native-dotenv'],
+            ],            
         ],
     };
 };
