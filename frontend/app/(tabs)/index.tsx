@@ -9,6 +9,7 @@ import Loader from '@/components/app/loader';
 import ErrorDisplay from '@/components/app/error';
 
 const DEV_URL = 'http://192.168.1.245:3000';
+const PROD_URL = 'https://assignment-msw1.onrender.com'
 
 interface SearchDataFormat {
     status: string;
@@ -63,7 +64,7 @@ export default function HomeScreen() {
                 synonyms: [],
             });			
             const { status, data } = await axios.get<responseData>(
-                `${DEV_URL}/search/${word.trim()}`
+                `${PROD_URL}/search/${word.trim()}`
             );			
 			console.log(data)
             if (data.type === 'Error') {
