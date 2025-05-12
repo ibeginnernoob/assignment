@@ -67,13 +67,13 @@ app.get('/search/:word', (req, res, next) => __awaiter(void 0, void 0, void 0, f
         if (parsedData.status == 500) {
             throw new Error('Term not found');
         }
-        res.status(200).json({
+        res.json({
             type: 'Data',
             searchData: parsedData,
         });
     }
     catch (e) {
-        res.status(500).json({
+        res.json({
             type: 'Error',
             msg: e.message
         });

@@ -62,12 +62,12 @@ app.get('/search/:word', async (req, res, next) => {
 			throw new Error('Term not found')
 		}
 
-        res.status(200).json({
+        res.json({
 			type: 'Data',
             searchData: parsedData,
         });
     } catch (e: any) {
-        res.status(500).json({
+        res.json({
 			type: 'Error',
             msg: e.message			
         });
