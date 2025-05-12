@@ -18,5 +18,7 @@ To start the frontend:
 cd backend
 npm run dev
 ```
+Replace ur own gemini key in the .env file -
+as given in the .env.example
 
 ## Time Taken: 8 hours
